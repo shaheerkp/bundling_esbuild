@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import * as esbuild from 'esbuild-wasm'
 import { unpkgPathPlugin } from '../plugins/unpkg-path-plugin';
 import { fetchPlugin } from '../plugins/fetch-plugin';
+
+import Preview from './preview';
+import { CodeEditor } from './CodeEditor';
 import CodeEditor from './code-editor';
 import "bulmaswatch/superhero/bulmaswatch.min.css";
 
@@ -14,7 +17,6 @@ const EsBuild = () => {
 
     useEffect(() => {
         startServices()
-    
     }, [])
 
 
@@ -26,6 +28,10 @@ const EsBuild = () => {
   
     }
 
+
+    const onChange=((newValue:any) => {
+        setInput(newValue)  
+    })
     const html=`
     <html>
     <head>
@@ -57,6 +63,15 @@ const EsBuild = () => {
 
     return (
         <div>
+
+            <CodeEditor input={input} onChange={onChange}/>
+            <div>  
+                <button onClick={async() => {
+                //    let result1 = await esbuild.transform(input,{
+                //         loader:'jsx',
+                //         target:'es2015'
+                //     })
+
             <CodeEditor onChange={(value:string)=>setInput(value)}  initialValue='const a=1;' />
             <textarea value={input} onChange={(e) => setInput(e.target.value)}>
 
@@ -88,8 +103,13 @@ const EsBuild = () => {
                 }}> 
                     Submit
                 </button>
+            </div>
+            <Preview code={code}/>
+            
+
             </div> 
              <iframe title="code preview" ref={iframe}  sandbox='allow-scripts' srcDoc={html}/>
+
         </div>
     )
 }
