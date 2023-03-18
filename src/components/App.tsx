@@ -1,6 +1,7 @@
 import { Provider } from "react-redux";
 import { store } from "../state";
 import EsBuild from "./EsBuild";
+import Preview from "./preview";
 import RepositoriesList from "./RepositoriesList";
 
 
@@ -12,6 +13,7 @@ const App = () => {
 <h1>Search for package</h1>
      <RepositoriesList/>
      <EsBuild/>
+    
     </Provider>
 
   </div>

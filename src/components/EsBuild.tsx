@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import * as esbuild from 'esbuild-wasm'
 import { unpkgPathPlugin } from '../plugins/unpkg-path-plugin';
 import { fetchPlugin } from '../plugins/fetch-plugin';
+import Preview from './preview';
+import { CodeEditor } from './CodeEditor';
+
 
 
 const EsBuild = () => {
@@ -11,7 +14,6 @@ const EsBuild = () => {
 
     useEffect(() => {
         startServices()
-    
     }, [])
 
 
@@ -23,14 +25,15 @@ const EsBuild = () => {
   
     }
 
+    const onChange=((newValue:any) => {
+        setInput(newValue)  
+    })
 
 
     return (
         <div>
-            <textarea value={input} onChange={(e) => setInput(e.target.value)}>
-
-            </textarea>
-            <div>
+            <CodeEditor input={input} onChange={onChange}/>
+            <div>  
                 <button onClick={async() => {
                 //    let result1 = await esbuild.transform(input,{
                 //         loader:'jsx',
@@ -61,9 +64,8 @@ const EsBuild = () => {
                     Submit
                 </button>
             </div>
-            <pre>
-                {code}
-            </pre>
+            <Preview code={code}/>
+            
         </div>
     )
 }
